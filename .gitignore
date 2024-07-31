@@ -1,0 +1,15 @@
+.aider*
+node_modules
+.next
+
+# IDE
+.vscode/
+.idea/
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Temporary files
+*.log
+*.tmp
