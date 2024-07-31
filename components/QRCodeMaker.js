@@ -7,6 +7,7 @@ import { useDarkMode } from '../contexts/DarkModeContext'
 export default function QRCodeMaker() {
   const [contentType, setContentType] = useState('URL')
   const [input, setInput] = useState('https://github.com/nesaranaeem')
+  const defaultTextContent = "I Am Nesar Ahmed Naeem. Full Stack Web Developer"
   const [contactInfo, setContactInfo] = useState({
     name: 'John Doe',
     phone: '+1234567890',
@@ -21,7 +22,7 @@ export default function QRCodeMaker() {
     fgColor: '#000000',
     bgColor: '#FFFFFF',
     logoImage: null,
-    value: '',
+    value: 'https://github.com/nesaranaeem',
     size: 256
   })
 
@@ -35,7 +36,7 @@ export default function QRCodeMaker() {
     } else if (contentType === 'URL') {
       setInput('https://github.com/nesaranaeem')
     } else if (contentType === 'Text') {
-      setInput('')
+      setInput(defaultTextContent)
     }
   }, [contentType])
 
@@ -43,7 +44,11 @@ export default function QRCodeMaker() {
     if (contentType === 'Contact') {
       setInput(JSON.stringify(contactInfo))
     }
-  }, [contentType, contactInfo])
+    setQrOptions(prevOptions => ({
+      ...prevOptions,
+      value: contentType === 'Contact' ? JSON.stringify(contactInfo) : input
+    }))
+  }, [contentType, contactInfo, input])
 
   const resetQrOptions = () => {
     setQrOptions({

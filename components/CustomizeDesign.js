@@ -6,7 +6,7 @@ const CustomizeDesign = ({ qrOptions, setQrOptions }) => {
   const renderQRCode = () => {
     return (
       <QRCode
-        value="Preview"
+        value={qrOptions.value || "Preview"}
         size={128}
         fgColor={qrOptions.fgColor}
         bgColor={qrOptions.bgColor}
@@ -72,7 +72,7 @@ const CustomizeDesign = ({ qrOptions, setQrOptions }) => {
         </div>
       </div>
       <div className="mt-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">Preview</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Real-time Preview</label>
         <div className="bg-gray-100 p-4 rounded-md flex items-center justify-center">
           {renderQRCode()}
         </div>
