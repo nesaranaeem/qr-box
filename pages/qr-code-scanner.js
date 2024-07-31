@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -9,7 +9,18 @@ import { useDarkMode } from '../contexts/DarkModeContext';
 export default function QRCodeScanner() {
   const [result, setResult] = useState('');
   const [camera, setCamera] = useState(false);
+  const [facingMode, setFacingMode] = useState('environment');
   const { darkMode } = useDarkMode();
+
+  useEffect(() => {
+    // Check if the device is mobile
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      setFacingMode('environment'); // Use back camera on mobile devices
+    } else {
+      setFacingMode('user'); // Use front camera on desktop
+    }
+  }, []);
 
   const handleScan = (data) => {
     if (data) {
@@ -89,6 +100,9 @@ export default function QRCodeScanner() {
                       onError={handleError}
                       onScan={handleScan}
                       style={{ width: '100%' }}
+                      constraints={{
+                        facingMode: facingMode
+                      }}
                     />
                   </div>
                 )}
