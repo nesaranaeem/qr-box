@@ -51,7 +51,13 @@
     "noBarcodeFound": "No barcode found in the image",
     "barcodeText": "Barcode",
     "unknownProductOrigin": "Product origin is unknown",
-    "uploadedBarcode": "Uploaded Barcode"
+    "uploadedBarcode": "Uploaded Barcode",
+    "chineseProduct": "This is a Chinese product",
+    "usaProduct": "This is a USA product",
+    "japaneseProduct": "This is a Japanese product",
+    "canadianProduct": "This is a Canadian product",
+    "bangladeshiProduct": "This is a Bangladeshi product",
+    "capturedBarcode": "Captured Barcode"
   },
   "bn": {
     "home": "হোম",
@@ -105,6 +111,12 @@
     "noBarcodeFound": "ছবিতে কোনো বারকোড পাওয়া যায়নি",
     "barcodeText": "বারকোড",
     "unknownProductOrigin": "পণ্যের উৎপত্তি অজানা",
-    "uploadedBarcode": "আপলোড করা বারকোড"
+    "uploadedBarcode": "আপলোড করা বারকোড",
+    "chineseProduct": "এটি একটি চীনা পণ্য",
+    "usaProduct": "এটি একটি মার্কিন পণ্য",
+    "japaneseProduct": "এটি একটি জাপানি পণ্য",
+    "canadianProduct": "এটি একটি কানাডীয় পণ্য",
+    "bangladeshiProduct": "এটি একটি বাংলাদেশী পণ্য",
+    "capturedBarcode": "ক্যাপচার করা বারকোড"
   }
 }

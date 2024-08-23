@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDarkMode } from "../contexts/DarkModeContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { BrowserMultiFormatReader } from "@zxing/library";
-import { FaUpload, FaCamera } from "react-icons/fa";
+import { FaUpload, FaCamera, FaStar } from "react-icons/fa";
 import Confetti from "react-confetti";
 
 const IndianProductDetector = () => {
@@ -10,6 +10,7 @@ const IndianProductDetector = () => {
   const [camera, setCamera] = useState(false);
   const [facingMode, setFacingMode] = useState("environment");
   const [previewImage, setPreviewImage] = useState(null);
+  const [capturedImage, setCapturedImage] = useState(null);
   const { darkMode } = useDarkMode();
   const { content } = useLanguage();
   const videoRef = useRef(null);
@@ -61,6 +62,8 @@ const IndianProductDetector = () => {
       canvas.getContext("2d").drawImage(videoRef.current, 0, 0);
       const imageDataUrl = canvas.toDataURL("image/jpeg");
 
+      setCapturedImage(imageDataUrl);
+
       codeReader.current
         .decodeFromImage(undefined, imageDataUrl)
         .then((result) => {
@@ -78,7 +81,46 @@ const IndianProductDetector = () => {
     if (code) {
       if (code.startsWith("890")) {
         setResult({ type: "indian", code: code });
-        setConfettiConfig(null);
+        setConfettiConfig({
+          numberOfPieces: 200,
+          recycle: false,
+          colors: ["#FF9933", "#FFFFFF", "#138808"],
+        });
+      } else if (code.startsWith("690") || code.startsWith("691") || code.startsWith("692")) {
+        setResult({ type: "china", code: code });
+        setConfettiConfig({
+          numberOfPieces: 200,
+          recycle: false,
+          colors: ["#DE2910", "#FFDE00"],
+        });
+      } else if (code.startsWith("00") || code.startsWith("01")) {
+        setResult({ type: "usa", code: code });
+        setConfettiConfig({
+          numberOfPieces: 200,
+          recycle: false,
+          colors: ["#B22234", "#FFFFFF", "#3C3B6E"],
+        });
+      } else if (code.startsWith("45") || code.startsWith("49")) {
+        setResult({ type: "japan", code: code });
+        setConfettiConfig({
+          numberOfPieces: 200,
+          recycle: false,
+          colors: ["#FFFFFF", "#BC002D"],
+        });
+      } else if (code.startsWith("754") || code.startsWith("755")) {
+        setResult({ type: "canada", code: code });
+        setConfettiConfig({
+          numberOfPieces: 200,
+          recycle: false,
+          colors: ["#FF0000", "#FFFFFF"],
+        });
+      } else if (code.startsWith("880")) {
+        setResult({ type: "bangladesh", code: code });
+        setConfettiConfig({
+          numberOfPieces: 200,
+          recycle: false,
+          colors: ["#006A4E", "#F42A41"],
+        });
       } else {
         setResult({ type: "unknown", code: code });
         setConfettiConfig({
@@ -206,18 +248,33 @@ const IndianProductDetector = () => {
               />
             </div>
           )}
+          {capturedImage && (
+            <div className="mt-4 text-center">
+              <h2 className="text-xl font-semibold mb-2">
+                {content.capturedBarcode}:
+              </h2>
+              <img
+                src={capturedImage}
+                alt="Captured barcode"
+                className="max-w-full h-auto rounded-lg mx-auto"
+                style={{ maxHeight: "300px" }}
+              />
+            </div>
+          )}
           {result && (
-            <div className="w-full max-w-md">
+            <div className="w-full max-w-md mt-4">
               <h2 className="text-xl font-semibold mb-2 text-center">
                 {content.scanResult}:
               </h2>
               <div
                 className={`p-4 rounded-lg ${
                   result.type === "indian"
-                    ? "bg-red-100 text-red-800"
-                    : result.type === "unknown"
+                    ? "bg-orange-100 text-orange-800"
+                    : result.type === "china" || result.type === "usa" || result.type === "japan" || result.type === "canada" || result.type === "bangladesh"
                     ? "bg-green-100 text-green-800"
-                    : "bg-yellow-100 text-yellow-800"
+                    : result.type === "unknown"
+                    ? "bg-yellow-100 text-yellow-800"
+                    : "bg-gray-100 text-gray-800"
                 }`}
               >
                 <p className="text-lg font-medium text-center">
@@ -225,6 +282,36 @@ const IndianProductDetector = () => {
                     <>
                       <span className="mr-2">🇮🇳</span>
                       {content.indianProduct}
+                    </>
+                  )}
+                  {result.type === "china" && (
+                    <>
+                      <span className="mr-2">🇨🇳</span>
+                      {content.chineseProduct}
+                    </>
+                  )}
+                  {result.type === "usa" && (
+                    <>
+                      <span className="mr-2">🇺🇸</span>
+                      {content.usaProduct}
+                    </>
+                  )}
+                  {result.type === "japan" && (
+                    <>
+                      <span className="mr-2">🇯🇵</span>
+                      {content.japaneseProduct}
+                    </>
+                  )}
+                  {result.type === "canada" && (
+                    <>
+                      <span className="mr-2">🇨🇦</span>
+                      {content.canadianProduct}
+                    </>
+                  )}
+                  {result.type === "bangladesh" && (
+                    <>
+                      <span className="mr-2">🇧🇩</span>
+                      {content.bangladeshiProduct}
                     </>
                   )}
                   {result.type === "unknown" && (
@@ -239,6 +326,13 @@ const IndianProductDetector = () => {
                   <p className="mt-2 text-center">
                     <strong>{content.barcodeText}:</strong> {result.code}
                   </p>
+                )}
+                {(result.type === "china" || result.type === "usa" || result.type === "japan" || result.type === "canada" || result.type === "bangladesh") && (
+                  <div className="flex justify-center mt-2">
+                    {[...Array(5)].map((_, index) => (
+                      <FaStar key={index} className="text-yellow-400 text-xl" />
+                    ))}
+                  </div>
                 )}
               </div>
             </div>
