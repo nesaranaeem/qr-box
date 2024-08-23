@@ -83,13 +83,7 @@ const IndianProductDetector = () => {
     if (code) {
       if (code.startsWith("890")) {
         setResult({ type: "indian", code: code });
-        setConfettiConfig({
-          numberOfPieces: 200,
-          recycle: false,
-          colors: ["#FF9933", "#FFFFFF", "#138808"],
-          width,
-          height,
-        });
+        setConfettiConfig(null);
       } else if (code.startsWith("690") || code.startsWith("691") || code.startsWith("692")) {
         setResult({ type: "china", code: code });
         setConfettiConfig({
@@ -333,7 +327,7 @@ const IndianProductDetector = () => {
           )}
         </div>
       </div>
-      {confettiConfig && <Confetti {...confettiConfig} />}
+      {confettiConfig && result && result.type !== "indian" && <Confetti {...confettiConfig} />}
     </div>
   );
 };
