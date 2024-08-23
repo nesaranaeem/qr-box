@@ -42,7 +42,13 @@
     "invalidEmailFormatContact": "Invalid email format in contact information",
     "qrCodeCopied": "QR Code copied to clipboard!",
     "generatedQRCode": "Generated QR Code",
-    "authorName": "Nesar Ahmed Naeem"
+    "authorName": "Nesar Ahmed Naeem",
+    "indianProductDetector": "Indian Product Detector",
+    "indianProductDetectorDescription": "Detect Indian products using barcode",
+    "uploadBarcode": "Upload Barcode",
+    "indianProduct": "This is an Indian product",
+    "notIndianProduct": "This is not an Indian product",
+    "noBarcodeFound": "No barcode found in the image"
   },
   "bn": {
     "home": "হোম",
@@ -87,6 +93,12 @@
     "invalidEmailFormatContact": "যোগাযোগ তথ্যে অবৈধ ইমেইল ফরম্যাট",
     "qrCodeCopied": "কিউআর কোড ক্লিপবোর্ডে কপি করা হয়েছে!",
     "generatedQRCode": "উৎপন্ন কিউআর কোড",
-    "authorName": "নেছার আহমেদ নাঈম"
+    "authorName": "নেছার আহমেদ নাঈম",
+    "indianProductDetector": "ভারতীয় পণ্য সনাক্তকারী",
+    "indianProductDetectorDescription": "বারকোড ব্যবহার করে ভারতীয় পণ্য সনাক্ত করুন",
+    "uploadBarcode": "বারকোড আপলোড করুন",
+    "indianProduct": "এটি একটি ভারতীয় পণ্য",
+    "notIndianProduct": "এটি ভারতীয় পণ্য নয়",
+    "noBarcodeFound": "ছবিতে কোনো বারকোড পাওয়া যায়নি"
   }
 }
