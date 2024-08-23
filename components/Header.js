@@ -36,6 +36,12 @@ export default function Header() {
           >
             {content.qrScanner}
           </Link>
+          <Link
+            href="/indian-product-detector"
+            className="hover:text-gray-600 dark:hover:text-gray-300"
+          >
+            {content.indianProductDetector}
+          </Link>
         </nav>
         <div className="flex items-center">
           <button
@@ -81,6 +87,14 @@ export default function Header() {
                 className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 {content.qrScanner}
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/indian-product-detector"
+                className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
+              >
+                {content.indianProductDetector}
               </Link>
             </li>
           </ul>
