@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDarkMode } from "../contexts/DarkModeContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { BrowserMultiFormatReader } from "@zxing/library";
-import { FaUpload, FaCamera, FaCamera } from "react-icons/fa";
+import { FaUpload, FaCamera } from "react-icons/fa";
 import Confetti from "react-confetti";
 
 const IndianProductDetector = () => {
@@ -55,13 +55,14 @@ const IndianProductDetector = () => {
 
   const captureAndScan = () => {
     if (videoRef.current) {
-      const canvas = document.createElement('canvas');
+      const canvas = document.createElement("canvas");
       canvas.width = videoRef.current.videoWidth;
       canvas.height = videoRef.current.videoHeight;
-      canvas.getContext('2d').drawImage(videoRef.current, 0, 0);
-      const imageDataUrl = canvas.toDataURL('image/jpeg');
-      
-      codeReader.current.decodeFromImage(undefined, imageDataUrl)
+      canvas.getContext("2d").drawImage(videoRef.current, 0, 0);
+      const imageDataUrl = canvas.toDataURL("image/jpeg");
+
+      codeReader.current
+        .decodeFromImage(undefined, imageDataUrl)
         .then((result) => {
           const scannedCode = result.getText();
           checkIfIndianProduct(scannedCode);
@@ -83,7 +84,7 @@ const IndianProductDetector = () => {
         setConfettiConfig({
           numberOfPieces: 100,
           recycle: false,
-          colors: ['#FFD700', '#C0C0C0'],
+          colors: ["#FFD700", "#C0C0C0"],
         });
       }
     } else {
@@ -121,11 +122,25 @@ const IndianProductDetector = () => {
   };
 
   return (
-    <div className={`max-w-4xl mx-auto ${darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"}`}>
-      <div className={`${darkMode ? "bg-gray-700" : "bg-gray-100"} shadow-md rounded-lg p-6 mb-8`}>
-        <h1 className="text-2xl font-bold mb-4">{content.indianProductDetector}</h1>
+    <div
+      className={`max-w-4xl mx-auto ${
+        darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
+      }`}
+    >
+      <div
+        className={`${
+          darkMode ? "bg-gray-700" : "bg-gray-100"
+        } shadow-md rounded-lg p-6 mb-8`}
+      >
+        <h1 className="text-2xl font-bold mb-4">
+          {content.indianProductDetector}
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className={`${darkMode ? "bg-gray-600" : "bg-gray-200"} p-6 rounded-lg`}>
+          <div
+            className={`${
+              darkMode ? "bg-gray-600" : "bg-gray-200"
+            } p-6 rounded-lg`}
+          >
             <h2 className="text-xl font-semibold mb-4 flex items-center">
               <FaUpload className="mr-2" /> {content.uploadBarcode}
             </h2>
@@ -143,7 +158,11 @@ const IndianProductDetector = () => {
               {content.chooseImage}
             </button>
           </div>
-          <div className={`${darkMode ? "bg-gray-600" : "bg-gray-200"} p-6 rounded-lg`}>
+          <div
+            className={`${
+              darkMode ? "bg-gray-600" : "bg-gray-200"
+            } p-6 rounded-lg`}
+          >
             <h2 className="text-xl font-semibold mb-4 flex items-center">
               <FaCamera className="mr-2" /> {content.scanWithCamera}
             </h2>
@@ -176,13 +195,22 @@ const IndianProductDetector = () => {
         <div className="mt-6 flex flex-col items-center">
           {previewImage && (
             <div className="mb-4 text-center">
-              <h2 className="text-xl font-semibold mb-2">{content.uploadedBarcode}:</h2>
-              <img src={previewImage} alt="Uploaded barcode" className="max-w-full h-auto rounded-lg mx-auto" style={{maxHeight: "300px"}} />
+              <h2 className="text-xl font-semibold mb-2">
+                {content.uploadedBarcode}:
+              </h2>
+              <img
+                src={previewImage}
+                alt="Uploaded barcode"
+                className="max-w-full h-auto rounded-lg mx-auto"
+                style={{ maxHeight: "300px" }}
+              />
             </div>
           )}
           {result && (
             <div className="w-full max-w-md">
-              <h2 className="text-xl font-semibold mb-2 text-center">{content.scanResult}:</h2>
+              <h2 className="text-xl font-semibold mb-2 text-center">
+                {content.scanResult}:
+              </h2>
               <div
                 className={`p-4 rounded-lg ${
                   result.type === "indian"
