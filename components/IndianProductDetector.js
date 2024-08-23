@@ -77,11 +77,15 @@ const IndianProductDetector = () => {
   };
 
   const checkIfIndianProduct = (code) => {
-    // Check if the barcode starts with 890 (Indian product code)
-    if (code.startsWith('890')) {
-      setResult('indian');
+    if (code) {
+      // Check if the barcode starts with 890 (Indian product code)
+      if (code.startsWith('890')) {
+        setResult({ type: 'indian', code: code });
+      } else {
+        setResult({ type: 'notIndian', code: code });
+      }
     } else {
-      setResult('notIndian');
+      setResult({ type: 'noBarcode', code: '' });
     }
   };
 
@@ -103,7 +107,7 @@ const IndianProductDetector = () => {
             if (result && result.codeResult) {
               checkIfIndianProduct(result.codeResult.code);
             } else {
-              setResult('noBarcode');
+              checkIfIndianProduct(null);
             }
           }
         );
@@ -150,26 +154,31 @@ const IndianProductDetector = () => {
       {result && (
         <div
           className={`p-4 rounded ${
-            result === 'indian'
+            result.type === 'indian'
               ? 'bg-red-100 text-red-700'
-              : result === 'notIndian'
+              : result.type === 'notIndian'
               ? 'bg-green-100 text-green-700'
               : 'bg-yellow-100 text-yellow-700'
           }`}
         >
-          {result === 'indian' && (
+          {result.type === 'indian' && (
             <>
               <span className="mr-2">🚫</span>
               {content.indianProduct}
             </>
           )}
-          {result === 'notIndian' && (
+          {result.type === 'notIndian' && (
             <>
               <span className="mr-2">✅</span>
               {content.notIndianProduct}
             </>
           )}
-          {result === 'noBarcode' && content.noBarcodeFound}
+          {result.type === 'noBarcode' && content.noBarcodeFound}
+          {result.code && (
+            <p className="mt-2">
+              <strong>{content.barcodeText}:</strong> {result.code}
+            </p>
+          )}
         </div>
       )}
     </div>

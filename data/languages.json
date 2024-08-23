@@ -48,7 +48,8 @@
     "uploadBarcode": "Upload Barcode",
     "indianProduct": "This is an Indian product",
     "notIndianProduct": "This is not an Indian product",
-    "noBarcodeFound": "No barcode found in the image"
+    "noBarcodeFound": "No barcode found in the image",
+    "barcodeText": "Barcode"
   },
   "bn": {
     "home": "হোম",
@@ -99,6 +100,7 @@
     "uploadBarcode": "বারকোড আপলোড করুন",
     "indianProduct": "এটি একটি ভারতীয় পণ্য",
     "notIndianProduct": "এটি ভারতীয় পণ্য নয়",
-    "noBarcodeFound": "ছবিতে কোনো বারকোড পাওয়া যায়নি"
+    "noBarcodeFound": "ছবিতে কোনো বারকোড পাওয়া যায়নি",
+    "barcodeText": "বারকোড"
   }
 }
