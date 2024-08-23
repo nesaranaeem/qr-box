@@ -11,7 +11,7 @@ export default function IndianProductDetectorPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
-        <title>{content.indianProductDetector} | {content.title}</title>
+        <title>{`${content.indianProductDetector} | ${content.title}`}</title>
         <meta name="description" content={content.indianProductDetectorDescription} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
