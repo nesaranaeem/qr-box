@@ -117,9 +117,9 @@ const IndianProductDetector = () => {
   };
 
   return (
-    <div className={`p-4 ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
+    <div className={`flex flex-col items-center ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
       <h1 className="text-2xl font-bold mb-4">{content.indianProductDetector}</h1>
-      <div className="mb-4">
+      <div className="mb-4 space-x-4">
         <button
           onClick={toggleCamera}
           className={`px-4 py-2 rounded ${
@@ -128,8 +128,6 @@ const IndianProductDetector = () => {
         >
           {camera ? content.stopCamera : content.startCamera}
         </button>
-      </div>
-      <div className="mb-4">
         <input
           type="file"
           accept="image/*"
@@ -146,7 +144,9 @@ const IndianProductDetector = () => {
           {content.uploadBarcode}
         </button>
       </div>
-      {camera && <div ref={videoRef} className="mb-4" />}
+      {camera && (
+        <div ref={videoRef} className="mb-4 w-full max-w-lg h-64 bg-black rounded-lg overflow-hidden" />
+      )}
       {result && (
         <div
           className={`p-4 rounded ${
