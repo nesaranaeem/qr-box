@@ -77,14 +77,18 @@ const IndianProductDetector = () => {
   };
 
   const checkIfIndianProduct = (code) => {
+    console.log('Checking if Indian product:', code);
     if (code) {
       // Check if the barcode starts with 890 (Indian product code)
       if (code.startsWith('890')) {
+        console.log('Indian product detected');
         setResult({ type: 'indian', code: code });
       } else {
+        console.log('Non-Indian product detected');
         setResult({ type: 'unknown', code: code });
       }
     } else {
+      console.log('No barcode provided');
       setResult({ type: 'noBarcode', code: '' });
     }
   };
@@ -102,11 +106,15 @@ const IndianProductDetector = () => {
               readers: ['ean_reader', 'ean_8_reader', 'code_128_reader', 'code_39_reader', 'code_93_reader', 'upc_reader', 'upc_e_reader'],
             },
             locate: true,
+            debug: true,
           },
           (result) => {
+            console.log('Quagga result:', result);
             if (result && result.codeResult) {
+              console.log('Barcode detected:', result.codeResult.code);
               checkIfIndianProduct(result.codeResult.code);
             } else {
+              console.log('No barcode detected');
               setResult({ type: 'noBarcode', code: '' });
             }
           }
