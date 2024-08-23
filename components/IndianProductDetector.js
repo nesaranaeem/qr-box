@@ -12,6 +12,8 @@ const IndianProductDetector = () => {
   const videoRef = useRef(null);
   const fileInputRef = useRef(null);
 
+  const [isQuaggaInitialized, setIsQuaggaInitialized] = useState(false);
+
   useEffect(() => {
     if (camera) {
       startScanner();
@@ -53,6 +55,7 @@ const IndianProductDetector = () => {
           return;
         }
         Quagga.start();
+        setIsQuaggaInitialized(true);
       }
     );
 
@@ -60,8 +63,9 @@ const IndianProductDetector = () => {
   };
 
   const stopScanner = () => {
-    if (Quagga) {
+    if (isQuaggaInitialized) {
       Quagga.stop();
+      setIsQuaggaInitialized(false);
     }
   };
 
