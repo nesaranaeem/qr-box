@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDarkMode } from "../contexts/DarkModeContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { BrowserMultiFormatReader } from "@zxing/library";
-import { FaUpload, FaCamera, FaStar } from "react-icons/fa";
+import { FaUpload, FaCamera, FaStar, FaExclamationTriangle, FaCheckCircle, FaInfoCircle } from "react-icons/fa";
 import Confetti from "react-confetti";
+import { useWindowSize } from "react-use";
 
 const IndianProductDetector = () => {
   const [result, setResult] = useState(null);
@@ -16,6 +17,7 @@ const IndianProductDetector = () => {
   const videoRef = useRef(null);
   const fileInputRef = useRef(null);
   const [confettiConfig, setConfettiConfig] = useState(null);
+  const { width, height } = useWindowSize();
 
   const codeReader = useRef(new BrowserMultiFormatReader());
 
@@ -85,6 +87,8 @@ const IndianProductDetector = () => {
           numberOfPieces: 200,
           recycle: false,
           colors: ["#FF9933", "#FFFFFF", "#138808"],
+          width,
+          height,
         });
       } else if (code.startsWith("690") || code.startsWith("691") || code.startsWith("692")) {
         setResult({ type: "china", code: code });
@@ -92,6 +96,8 @@ const IndianProductDetector = () => {
           numberOfPieces: 200,
           recycle: false,
           colors: ["#DE2910", "#FFDE00"],
+          width,
+          height,
         });
       } else if (code.startsWith("00") || code.startsWith("01")) {
         setResult({ type: "usa", code: code });
@@ -99,6 +105,8 @@ const IndianProductDetector = () => {
           numberOfPieces: 200,
           recycle: false,
           colors: ["#B22234", "#FFFFFF", "#3C3B6E"],
+          width,
+          height,
         });
       } else if (code.startsWith("45") || code.startsWith("49")) {
         setResult({ type: "japan", code: code });
@@ -106,6 +114,8 @@ const IndianProductDetector = () => {
           numberOfPieces: 200,
           recycle: false,
           colors: ["#FFFFFF", "#BC002D"],
+          width,
+          height,
         });
       } else if (code.startsWith("754") || code.startsWith("755")) {
         setResult({ type: "canada", code: code });
@@ -113,6 +123,8 @@ const IndianProductDetector = () => {
           numberOfPieces: 200,
           recycle: false,
           colors: ["#FF0000", "#FFFFFF"],
+          width,
+          height,
         });
       } else if (code.startsWith("880")) {
         setResult({ type: "bangladesh", code: code });
@@ -120,6 +132,8 @@ const IndianProductDetector = () => {
           numberOfPieces: 200,
           recycle: false,
           colors: ["#006A4E", "#F42A41"],
+          width,
+          height,
         });
       } else {
         setResult({ type: "unknown", code: code });
@@ -127,6 +141,8 @@ const IndianProductDetector = () => {
           numberOfPieces: 100,
           recycle: false,
           colors: ["#FFD700", "#C0C0C0"],
+          width,
+          height,
         });
       }
     } else {
@@ -269,58 +285,36 @@ const IndianProductDetector = () => {
               <div
                 className={`p-4 rounded-lg ${
                   result.type === "indian"
-                    ? "bg-orange-100 text-orange-800"
-                    : result.type === "china" || result.type === "usa" || result.type === "japan" || result.type === "canada" || result.type === "bangladesh"
-                    ? "bg-green-100 text-green-800"
-                    : result.type === "unknown"
-                    ? "bg-yellow-100 text-yellow-800"
-                    : "bg-gray-100 text-gray-800"
+                    ? "bg-red-600 text-white"
+                    : result.type === "bangladesh"
+                    ? "bg-green-600 text-white"
+                    : "bg-yellow-100 text-yellow-800"
                 }`}
               >
-                <p className="text-lg font-medium text-center">
+                <p className="text-lg font-medium text-center flex items-center justify-center">
                   {result.type === "indian" && (
                     <>
-                      <span className="mr-2">🇮🇳</span>
+                      <FaExclamationTriangle className="mr-2" />
                       {content.indianProduct}
-                    </>
-                  )}
-                  {result.type === "china" && (
-                    <>
-                      <span className="mr-2">🇨🇳</span>
-                      {content.chineseProduct}
-                    </>
-                  )}
-                  {result.type === "usa" && (
-                    <>
-                      <span className="mr-2">🇺🇸</span>
-                      {content.usaProduct}
-                    </>
-                  )}
-                  {result.type === "japan" && (
-                    <>
-                      <span className="mr-2">🇯🇵</span>
-                      {content.japaneseProduct}
-                    </>
-                  )}
-                  {result.type === "canada" && (
-                    <>
-                      <span className="mr-2">🇨🇦</span>
-                      {content.canadianProduct}
                     </>
                   )}
                   {result.type === "bangladesh" && (
                     <>
-                      <span className="mr-2">🇧🇩</span>
+                      <FaCheckCircle className="mr-2" />
                       {content.bangladeshiProduct}
                     </>
                   )}
-                  {result.type === "unknown" && (
+                  {result.type !== "indian" && result.type !== "bangladesh" && (
                     <>
-                      <span className="mr-2">❓</span>
-                      {content.unknownProductOrigin}
+                      <FaInfoCircle className="mr-2" />
+                      {result.type === "china" && content.chineseProduct}
+                      {result.type === "usa" && content.usaProduct}
+                      {result.type === "japan" && content.japaneseProduct}
+                      {result.type === "canada" && content.canadianProduct}
+                      {result.type === "unknown" && content.unknownProductOrigin}
+                      {result.type === "noBarcode" && content.noBarcodeFound}
                     </>
                   )}
-                  {result.type === "noBarcode" && content.noBarcodeFound}
                 </p>
                 {result.code && (
                   <p className="mt-2 text-center">
