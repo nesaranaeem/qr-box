@@ -22,6 +22,10 @@ const IndianProductDetector = () => {
   }, [camera]);
 
   const startScanner = () => {
+    if (!Quagga) {
+      console.error('Quagga is not available');
+      return;
+    }
     Quagga.init(
       {
         inputStream: {
@@ -56,7 +60,9 @@ const IndianProductDetector = () => {
   };
 
   const stopScanner = () => {
-    Quagga.stop();
+    if (Quagga) {
+      Quagga.stop();
+    }
   };
 
   const handleScan = (data) => {
