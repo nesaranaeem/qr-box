@@ -50,7 +50,8 @@
     "notIndianProduct": "This is not an Indian product",
     "noBarcodeFound": "No barcode found in the image",
     "barcodeText": "Barcode",
-    "unknownProductOrigin": "Product origin is unknown"
+    "unknownProductOrigin": "Product origin is unknown",
+    "uploadedBarcode": "Uploaded Barcode"
   },
   "bn": {
     "home": "হোম",
@@ -103,6 +104,7 @@
     "notIndianProduct": "এটি ভারতীয় পণ্য নয়",
     "noBarcodeFound": "ছবিতে কোনো বারকোড পাওয়া যায়নি",
     "barcodeText": "বারকোড",
-    "unknownProductOrigin": "পণ্যের উৎপত্তি অজানা"
+    "unknownProductOrigin": "পণ্যের উৎপত্তি অজানা",
+    "uploadedBarcode": "আপলোড করা বারকোড"
   }
 }
