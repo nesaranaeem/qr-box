@@ -14,7 +14,7 @@ const IndianProductDetector = () => {
   const { content } = useLanguage();
   const videoRef = useRef(null);
   const fileInputRef = useRef(null);
-  const [showConfetti, setShowConfetti] = useState(false);
+  const [confettiConfig, setConfettiConfig] = useState(null);
 
   const codeReader = useRef(new BrowserMultiFormatReader());
 
@@ -57,14 +57,28 @@ const IndianProductDetector = () => {
     if (code) {
       if (code.startsWith("890")) {
         setResult({ type: "indian", code: code });
-        setShowConfetti(true);
-        setTimeout(() => setShowConfetti(false), 5000);
+        setConfettiConfig({
+          numberOfPieces: 200,
+          recycle: false,
+          colors: ['#FFA500', '#4CAF50', '#2196F3'],
+        });
       } else {
         setResult({ type: "unknown", code: code });
+        setConfettiConfig({
+          numberOfPieces: 100,
+          recycle: false,
+          colors: ['#FFD700', '#C0C0C0'],
+        });
       }
     } else {
       setResult({ type: "noBarcode", code: "" });
+      setConfettiConfig({
+        numberOfPieces: 50,
+        recycle: false,
+        colors: ['#FF0000', '#FFA500'],
+      });
     }
+    setTimeout(() => setConfettiConfig(null), 5000);
   };
 
   const handleFileUpload = (event) => {
@@ -137,49 +151,51 @@ const IndianProductDetector = () => {
             )}
           </div>
         </div>
-        {previewImage && (
-          <div className="mt-6">
-            <h2 className="text-xl font-semibold mb-2">{content.uploadedBarcode}:</h2>
-            <img src={previewImage} alt="Uploaded barcode" className="max-w-full h-auto rounded-lg" />
-          </div>
-        )}
-        {result && (
-          <div className="mt-6">
-            <h2 className="text-xl font-semibold mb-2">{content.scanResult}:</h2>
-            <div
-              className={`p-4 rounded-lg ${
-                result.type === "indian"
-                  ? "bg-green-100 text-green-800"
-                  : result.type === "unknown"
-                  ? "bg-yellow-100 text-yellow-800"
-                  : "bg-red-100 text-red-800"
-              }`}
-            >
-              <p className="text-lg font-medium">
-                {result.type === "indian" && (
-                  <>
-                    <span className="mr-2">🇮🇳</span>
-                    {content.indianProduct}
-                  </>
-                )}
-                {result.type === "unknown" && (
-                  <>
-                    <span className="mr-2">❓</span>
-                    {content.unknownProductOrigin}
-                  </>
-                )}
-                {result.type === "noBarcode" && content.noBarcodeFound}
-              </p>
-              {result.code && (
-                <p className="mt-2">
-                  <strong>{content.barcodeText}:</strong> {result.code}
-                </p>
-              )}
+        <div className="mt-6 flex flex-col items-center">
+          {previewImage && (
+            <div className="mb-4 text-center">
+              <h2 className="text-xl font-semibold mb-2">{content.uploadedBarcode}:</h2>
+              <img src={previewImage} alt="Uploaded barcode" className="max-w-full h-auto rounded-lg mx-auto" style={{maxHeight: "300px"}} />
             </div>
-          </div>
-        )}
+          )}
+          {result && (
+            <div className="w-full max-w-md">
+              <h2 className="text-xl font-semibold mb-2 text-center">{content.scanResult}:</h2>
+              <div
+                className={`p-4 rounded-lg ${
+                  result.type === "indian"
+                    ? "bg-green-100 text-green-800"
+                    : result.type === "unknown"
+                    ? "bg-yellow-100 text-yellow-800"
+                    : "bg-red-100 text-red-800"
+                }`}
+              >
+                <p className="text-lg font-medium text-center">
+                  {result.type === "indian" && (
+                    <>
+                      <span className="mr-2">🇮🇳</span>
+                      {content.indianProduct}
+                    </>
+                  )}
+                  {result.type === "unknown" && (
+                    <>
+                      <span className="mr-2">❓</span>
+                      {content.unknownProductOrigin}
+                    </>
+                  )}
+                  {result.type === "noBarcode" && content.noBarcodeFound}
+                </p>
+                {result.code && (
+                  <p className="mt-2 text-center">
+                    <strong>{content.barcodeText}:</strong> {result.code}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-      {showConfetti && <Confetti />}
+      {confettiConfig && <Confetti {...confettiConfig} />}
     </div>
   );
 };
