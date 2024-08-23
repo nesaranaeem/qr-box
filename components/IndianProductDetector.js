@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDarkMode } from "../contexts/DarkModeContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { BrowserMultiFormatReader } from "@zxing/library";
-import { FaUpload, FaCamera } from "react-icons/fa";
+import { FaUpload, FaCamera, FaCamera } from "react-icons/fa";
 import Confetti from "react-confetti";
 
 const IndianProductDetector = () => {
@@ -50,6 +50,26 @@ const IndianProductDetector = () => {
   const stopScanner = () => {
     if (codeReader.current) {
       codeReader.current.reset();
+    }
+  };
+
+  const captureAndScan = () => {
+    if (videoRef.current) {
+      const canvas = document.createElement('canvas');
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      canvas.getContext('2d').drawImage(videoRef.current, 0, 0);
+      const imageDataUrl = canvas.toDataURL('image/jpeg');
+      
+      codeReader.current.decodeFromImage(undefined, imageDataUrl)
+        .then((result) => {
+          const scannedCode = result.getText();
+          checkIfIndianProduct(scannedCode);
+        })
+        .catch((err) => {
+          console.error("No barcode detected:", err);
+          setResult({ type: "noBarcode", code: "" });
+        });
     }
   };
 
@@ -134,14 +154,22 @@ const IndianProductDetector = () => {
               {camera ? content.stopCamera : content.startCamera}
             </button>
             {camera && (
-              <div className="mt-4">
-                <video
-                  ref={videoRef}
-                  className="w-full h-48 object-cover rounded-lg"
-                  autoPlay
-                  playsInline
-                />
-              </div>
+              <>
+                <button
+                  onClick={captureAndScan}
+                  className={`bg-green-600 text-white px-4 py-2 rounded-md w-full mb-2`}
+                >
+                  {content.captureAndScan}
+                </button>
+                <div className="mt-4">
+                  <video
+                    ref={videoRef}
+                    className="w-full h-48 object-cover rounded-lg"
+                    autoPlay
+                    playsInline
+                  />
+                </div>
+              </>
             )}
           </div>
         </div>
