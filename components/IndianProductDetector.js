@@ -57,11 +57,7 @@ const IndianProductDetector = () => {
     if (code) {
       if (code.startsWith("890")) {
         setResult({ type: "indian", code: code });
-        setConfettiConfig({
-          numberOfPieces: 200,
-          recycle: false,
-          colors: ['#FFA500', '#4CAF50', '#2196F3'],
-        });
+        setConfettiConfig(null);
       } else {
         setResult({ type: "unknown", code: code });
         setConfettiConfig({
@@ -72,13 +68,11 @@ const IndianProductDetector = () => {
       }
     } else {
       setResult({ type: "noBarcode", code: "" });
-      setConfettiConfig({
-        numberOfPieces: 50,
-        recycle: false,
-        colors: ['#FF0000', '#FFA500'],
-      });
+      setConfettiConfig(null);
     }
-    setTimeout(() => setConfettiConfig(null), 5000);
+    if (confettiConfig) {
+      setTimeout(() => setConfettiConfig(null), 5000);
+    }
   };
 
   const handleFileUpload = (event) => {
@@ -164,10 +158,10 @@ const IndianProductDetector = () => {
               <div
                 className={`p-4 rounded-lg ${
                   result.type === "indian"
-                    ? "bg-green-100 text-green-800"
+                    ? "bg-red-100 text-red-800"
                     : result.type === "unknown"
-                    ? "bg-yellow-100 text-yellow-800"
-                    : "bg-red-100 text-red-800"
+                    ? "bg-green-100 text-green-800"
+                    : "bg-yellow-100 text-yellow-800"
                 }`}
               >
                 <p className="text-lg font-medium text-center">
