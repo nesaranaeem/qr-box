@@ -7,6 +7,7 @@ const IndianProductDetector = () => {
   const [result, setResult] = useState('');
   const [camera, setCamera] = useState(false);
   const [facingMode, setFacingMode] = useState('environment');
+  const [detectedBoxes, setDetectedBoxes] = useState([]);
   const { darkMode } = useDarkMode();
   const { content } = useLanguage();
   const videoRef = useRef(null);
@@ -73,6 +74,7 @@ const IndianProductDetector = () => {
     if (data && data.codeResult) {
       const scannedCode = data.codeResult.code;
       checkIfIndianProduct(scannedCode);
+      setDetectedBoxes(data.boxes || []);
     }
   };
 
@@ -113,9 +115,11 @@ const IndianProductDetector = () => {
             if (result && result.codeResult) {
               console.log('Barcode detected:', result.codeResult.code);
               checkIfIndianProduct(result.codeResult.code);
+              setDetectedBoxes(result.boxes || []);
             } else {
               console.log('No barcode detected');
               setResult({ type: 'noBarcode', code: '' });
+              setDetectedBoxes([]);
             }
           }
         );
@@ -187,6 +191,14 @@ const IndianProductDetector = () => {
               <strong>{content.barcodeText}:</strong> {result.code}
             </p>
           )}
+        </div>
+      )}
+      {detectedBoxes.length > 0 && (
+        <div className="mt-4">
+          <h2 className="text-xl font-bold mb-2">Detected Boxes:</h2>
+          <pre className="bg-gray-100 dark:bg-gray-700 p-4 rounded overflow-auto">
+            {JSON.stringify(detectedBoxes, null, 2)}
+          </pre>
         </div>
       )}
     </div>
