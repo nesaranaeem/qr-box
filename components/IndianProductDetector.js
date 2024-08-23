@@ -45,7 +45,7 @@ const IndianProductDetector = () => {
         },
         numOfWorkers: navigator.hardwareConcurrency || 4,
         decoder: {
-          readers: ['ean_reader', 'ean_8_reader'],
+          readers: ['ean_reader', 'ean_8_reader', 'code_128_reader', 'code_39_reader', 'code_93_reader', 'upc_reader', 'upc_e_reader'],
         },
         locate: true,
       },
@@ -82,7 +82,7 @@ const IndianProductDetector = () => {
       if (code.startsWith('890')) {
         setResult({ type: 'indian', code: code });
       } else {
-        setResult({ type: 'notIndian', code: code });
+        setResult({ type: 'unknown', code: code });
       }
     } else {
       setResult({ type: 'noBarcode', code: '' });
@@ -167,10 +167,10 @@ const IndianProductDetector = () => {
               {content.indianProduct}
             </>
           )}
-          {result.type === 'notIndian' && (
+          {result.type === 'unknown' && (
             <>
-              <span className="mr-2">✅</span>
-              {content.notIndianProduct}
+              <span className="mr-2">❓</span>
+              {content.unknownProductOrigin}
             </>
           )}
           {result.type === 'noBarcode' && content.noBarcodeFound}
