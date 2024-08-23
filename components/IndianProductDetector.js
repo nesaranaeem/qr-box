@@ -99,7 +99,7 @@ const IndianProductDetector = () => {
             src: e.target.result,
             numOfWorkers: navigator.hardwareConcurrency || 4,
             decoder: {
-              readers: ['ean_reader', 'ean_8_reader'],
+              readers: ['ean_reader', 'ean_8_reader', 'code_128_reader', 'code_39_reader', 'code_93_reader', 'upc_reader', 'upc_e_reader'],
             },
             locate: true,
           },
@@ -107,7 +107,7 @@ const IndianProductDetector = () => {
             if (result && result.codeResult) {
               checkIfIndianProduct(result.codeResult.code);
             } else {
-              checkIfIndianProduct(null);
+              setResult({ type: 'noBarcode', code: '' });
             }
           }
         );
