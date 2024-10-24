@@ -36,12 +36,7 @@ export default function Header() {
           >
             {content.qrScanner}
           </Link>
-          <Link
-            href="/indian-product-detector"
-            className="hover:text-gray-600 dark:hover:text-gray-300"
-          >
-            {content.indianProductDetector}
-          </Link>
+          
         </nav>
         <div className="flex items-center">
           <button
