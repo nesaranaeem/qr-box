@@ -89,14 +89,7 @@ export default function Header() {
                 {content.qrScanner}
               </Link>
             </li>
-            <li>
-              <Link
-                href="/indian-product-detector"
-                className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-              >
-                {content.indianProductDetector}
-              </Link>
-            </li>
+            
           </ul>
         </div>
       )}
